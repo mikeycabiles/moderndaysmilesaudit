@@ -406,6 +406,75 @@
     color: rgba(184,80,96,0.4);
   }
 
+  /* ── HAMBURGER ───────────────────────────────── */
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 400;
+    width: 38px;
+    height: 38px;
+    background: var(--plum);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0;
+  }
+  .hamburger span {
+    display: block;
+    width: 17px;
+    height: 2px;
+    background: #FFFFFF;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+  }
+
+  /* ── OVERLAY ─────────────────────────────────── */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 150;
+  }
+
+  /* ── MOBILE ──────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+    }
+    .sidebar.open { transform: translateX(0); }
+
+    .page-content { margin-left: 0; }
+
+    .cover-inner { padding: 68px 24px 36px; }
+    .cover h1 { font-size: 32px; }
+    .cover-sub { font-size: 15px; margin-bottom: 22px; }
+    .cover-meta { flex-direction: column; gap: 14px; }
+
+    .body { padding: 0 20px 48px; }
+
+    .section { padding-top: 28px; margin-top: 28px; }
+    .section:first-child { margin-top: 28px; }
+
+    .stat-row { grid-template-columns: 1fr; gap: 10px; }
+
+    .funnel-card-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    .rec-grid { grid-template-columns: 1fr; }
+
+    .footer-inner { flex-direction: column; gap: 10px; padding: 24px 20px; }
+    .footer-right { align-self: flex-start; }
+  }
+
   /* ── PRINT ───────────────────────────────────── */
   @media print {
     .sidebar { display: none; }
@@ -420,6 +489,14 @@
 </style>
 </head>
 <body>
+
+<!-- ── HAMBURGER (mobile only) ──────────────────────── -->
+<button class="hamburger" id="hamburger" aria-label="Open navigation menu">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- ── OVERLAY (mobile only) ────────────────────────── -->
+<div class="overlay" id="overlay"></div>
 
 <!-- ── SIDEBAR ──────────────────────────────────────── -->
 <aside class="sidebar">
@@ -700,27 +777,47 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.section[id]');
-    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const sections  = document.querySelectorAll('.section[id]');
+    const navLinks  = document.querySelectorAll('.sidebar-nav a');
+    const sidebar   = document.querySelector('.sidebar');
+    const hamburger = document.getElementById('hamburger');
+    const overlay   = document.getElementById('overlay');
 
     // Hide all sections except the first on load
     sections.forEach((s, i) => {
       s.style.display = i === 0 ? 'block' : 'none';
     });
 
+    function openDrawer() {
+      sidebar.classList.add('open');
+      overlay.style.display = 'block';
+      hamburger.style.display = 'none';
+    }
+
+    function closeDrawer() {
+      sidebar.classList.remove('open');
+      overlay.style.display = 'none';
+      hamburger.style.display = '';
+    }
+
+    // Tab switching
     navLinks.forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
-        // Hide all sections
         sections.forEach(s => s.style.display = 'none');
-        // Clear active state from all nav links
         navLinks.forEach(l => l.classList.remove('active'));
-        // Show the target section and mark link active
         link.classList.add('active');
         const target = document.getElementById(link.getAttribute('href').slice(1));
         if (target) target.style.display = 'block';
+        if (window.innerWidth <= 768) closeDrawer();
       });
     });
+
+    // Hamburger opens the drawer
+    hamburger.addEventListener('click', openDrawer);
+
+    // Tapping the overlay closes the drawer
+    overlay.addEventListener('click', closeDrawer);
   });
 </script>
 
