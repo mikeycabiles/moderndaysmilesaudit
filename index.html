@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Audit — Modern Day Smiles</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @page { size: 8.5in 11in; margin: 0; }
+
+  :root {
+    --plum: #261620;
+    --warm-surface: #3A2030;
+    --dusty-red: #B85060;
+    --dusty-red-light: #C96272;
+    --body-text: #261620;
+    --muted: #7A6068;
+    --border: #ECD8DE;
+    --white: #FFFFFF;
+    --green: #2D7A5A;
+    --amber: #B87A1A;
+    --red-soft: #C04050;
+    --sidebar-w: 220px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--body-text);
+    background: #FFFFFF;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── SIDEBAR ─────────────────────────────────── */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--plum);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    overflow-y: auto;
+  }
+
+  .sidebar-header {
+    padding: 28px 22px 18px;
+    border-bottom: 1px solid rgba(184,80,96,0.22);
+    flex-shrink: 0;
+  }
+  .sidebar-tag {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dusty-red-light);
+    margin-bottom: 8px;
+  }
+  .sidebar-title {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.25;
+    margin-bottom: 5px;
+  }
+  .sidebar-client {
+    font-size: 11px;
+    color: rgba(255,255,255,0.38);
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 12px 0;
+  }
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 22px;
+    text-decoration: none;
+    color: rgba(255,255,255,0.48);
+    font-size: 12.5px;
+    border-left: 2px solid transparent;
+    transition: all 0.15s ease;
+  }
+  .sidebar-nav a:hover {
+    color: rgba(255,255,255,0.82);
+    background: rgba(255,255,255,0.04);
+  }
+  .sidebar-nav a.active {
+    color: #FFFFFF;
+    border-left-color: var(--dusty-red);
+    background: rgba(184,80,96,0.13);
+  }
+  .nav-num {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--dusty-red);
+    min-width: 16px;
+    flex-shrink: 0;
+  }
+  .sidebar-nav a.active .nav-num { color: var(--dusty-red-light); }
+
+  .sidebar-footer {
+    padding: 16px 22px;
+    border-top: 1px solid rgba(184,80,96,0.2);
+    flex-shrink: 0;
+  }
+  .sidebar-footer .sf-by { font-size: 10px; color: rgba(255,255,255,0.32); }
+  .sidebar-footer .sf-name { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.68); margin: 2px 0; }
+  .sidebar-footer .sf-conf { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); }
+
+  /* ── PAGE CONTENT (offset by sidebar) ───────── */
+  .page-content { margin-left: var(--sidebar-w); }
+
+  /* ── COVER ───────────────────────────────────── */
+  .cover {
+    background: var(--plum);
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,80,96,0.18);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(184,80,96,0.10);
+  }
+  .cover-inner {
+    padding: 60px 60px 52px;
+    position: relative;
+    z-index: 1;
+  }
+  .cover-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dusty-red-light);
+    margin-bottom: 22px;
+  }
+  .cover h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+  .cover-sub {
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 40px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    border-top: 1px solid rgba(184,80,96,0.22);
+    padding-top: 28px;
+  }
+  .cover-meta-item label {
+    display: block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dusty-red-light);
+    margin-bottom: 4px;
+  }
+  .cover-meta-item span {
+    font-size: 13px;
+    color: #FFFFFF;
+    font-weight: 400;
+  }
+
+  /* ── BODY ────────────────────────────────────── */
+  .body { padding: 0 60px 60px; background: #FFFFFF; }
+
+  .section {
+    padding-top: 48px;
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    scroll-margin-top: 24px;
+  }
+  .section:first-child { margin-top: 48px; border-top: none; }
+
+  .section-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dusty-red);
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--plum);
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .section p {
+    color: var(--body-text);
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  /* ── STAT CARDS ──────────────────────────────── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 22px 0;
+  }
+  .stat-card {
+    background: var(--plum);
+    border-radius: 10px;
+    padding: 20px 18px;
+  }
+  .stat-card .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--dusty-red-light);
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.4;
+  }
+  .stat-card .stat-source {
+    font-size: 10px;
+    color: rgba(255,255,255,0.28);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── FUNNEL CARDS ────────────────────────────── */
+  .funnel-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .funnel-card-header {
+    background: var(--warm-surface);
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .funnel-card-header h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0;
+  }
+  .badge-row { display: flex; gap: 6px; }
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .badge-green { background: rgba(45,122,90,0.25); color: #5FCF9F; }
+  .badge-amber { background: rgba(184,122,26,0.25); color: #E8B555; }
+  .badge-red   { background: rgba(192,64,80,0.25);  color: #F08090; }
+
+  .funnel-card-body { background: #FFFFFF; padding: 20px 22px; }
+
+  /* ── FINDINGS ────────────────────────────────── */
+  .finding-group { margin-bottom: 18px; }
+  .finding-group-title {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .finding {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #F5ECED;
+    align-items: flex-start;
+  }
+  .finding:last-child { border-bottom: none; }
+  .finding-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .dot-green { background: var(--green); }
+  .dot-amber { background: var(--amber); }
+  .dot-red   { background: var(--red-soft); }
+  .finding-text { font-size: 13.5px; color: var(--body-text); line-height: 1.58; }
+  .finding-text strong { font-weight: 600; color: var(--plum); }
+  .metric-pill {
+    display: inline-block;
+    background: rgba(184,80,96,0.10);
+    color: var(--dusty-red);
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 3px;
+  }
+
+  /* ── CALLOUT ─────────────────────────────────── */
+  .callout {
+    border-left: 3px solid var(--dusty-red);
+    background: rgba(184,80,96,0.06);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin: 18px 0;
+  }
+  .callout p { margin: 0; font-size: 13px; color: var(--body-text); line-height: 1.6; }
+  .callout strong { color: var(--plum); }
+
+  /* ── REC CARDS ───────────────────────────────── */
+  .rec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+  .rec-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    background: #FFFFFF;
+  }
+  .rec-card .rec-title { font-size: 13.5px; font-weight: 600; color: var(--plum); margin-bottom: 6px; }
+  .rec-card .rec-desc  { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+  /* ── STEPS ───────────────────────────────────── */
+  .steps-list { margin: 18px 0; }
+  .step {
+    display: flex;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--plum);
+    color: var(--dusty-red-light);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-title { font-size: 13.5px; font-weight: 600; color: var(--plum); margin-bottom: 3px; }
+  .step-desc  { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  /* ── FOOTER ──────────────────────────────────── */
+  .footer { background: var(--plum); width: 100%; }
+  .footer-inner {
+    padding: 30px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-left p { font-size: 12px; color: rgba(255,255,255,0.48); margin: 0; }
+  .footer-left p + p { margin-top: 4px; }
+  .footer-left strong { color: var(--dusty-red-light); }
+  .footer-right {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(184,80,96,0.4);
+  }
+
+  /* ── PRINT ───────────────────────────────────── */
+  @media print {
+    .sidebar { display: none; }
+    .page-content { margin-left: 0; }
+    body { width: 8.5in; }
+    .cover-inner, .body, .footer-inner { padding-left: 0.75in; padding-right: 0.75in; }
+    .cover, .footer, .stat-card, .funnel-card-header {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ──────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-tag">Marketing Audit</div>
+    <div class="sidebar-title">Modern Day<br>Smiles</div>
+    <div class="sidebar-client">Dr. Vivek Solanki</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#overview"  class="active"><span class="nav-num">01</span>Executive Summary</a>
+    <a href="#control">          <span class="nav-num">02</span>Control Funnel</a>
+    <a href="#original">         <span class="nav-num">03</span>Original Funnel</a>
+    <a href="#newest">           <span class="nav-num">04</span>Newest Funnel</a>
+    <a href="#infrastructure">   <span class="nav-num">05</span>Infrastructure</a>
+    <a href="#actionplan">       <span class="nav-num">06</span>Action Plan</a>
+    <a href="#closing">          <span class="nav-num">07</span>Closing</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sf-by">Prepared by</div>
+    <div class="sf-name">Mikey Cabiles</div>
+    <div class="sf-conf">Confidential</div>
+  </div>
+</aside>
+
+<!-- ── PAGE CONTENT ─────────────────────────────────── -->
+<div class="page-content">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-inner">
+      <div class="cover-label">Paid Media &amp; Funnel Audit</div>
+      <h1>Marketing Audit</h1>
+      <div class="cover-sub">Modern Day Smiles — Funnel and Meta Ads Review</div>
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <label>Prepared by</label>
+          <span>Mikey Cabiles</span>
+        </div>
+        <div class="cover-meta-item">
+          <label>Client</label>
+          <span>Dr. Vivek Solanki / Modern Day Smiles</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- 01 OVERVIEW -->
+    <div class="section" id="overview">
+      <div class="section-label">01 — Executive Summary</div>
+      <h2>Executive Summary</h2>
+      <p>Three funnel variants reviewed — the <strong>Control</strong>, the <strong>Original</strong>, and the <strong>Newest</strong> — each evaluated across landing page structure, conversion architecture, creative strategy, and ad execution. All findings are based on initial review and would be validated through structured A/B testing before any permanent changes are implemented.</p>
+      <p>The Control is the strongest performer by structure. The Original and Newest funnels carry more visual sophistication but introduce friction points that, in a paid social environment, are likely suppressing conversion. The most consistent opportunity across all three is the shift to a mobile-first, single-page funnel strategy with a stronger lead capture architecture.</p>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-num">82%</div>
+          <div class="stat-label">of Facebook users access the platform exclusively on mobile devices</div>
+          <div class="stat-source">Statista / Meta Audience Insights</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">~85%</div>
+          <div class="stat-label">of Facebook users watch videos on mute — captions are essential for any paid creative</div>
+          <div class="stat-source">Meta / Digiday Research</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">2–5%</div>
+          <div class="stat-label">average conversion rate for healthcare landing pages on paid traffic</div>
+          <div class="stat-source">WordStream Healthcare Benchmarks</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Audit Scope:</strong> This review does not constitute a performance analysis — no backend data, ad spend, or CRM metrics were provided for this audit. All findings are based on front-end structural and creative review. Recommendations are presented as testable hypotheses, not directives.</p>
+      </div>
+    </div>
+
+    <!-- 02 CONTROL -->
+    <div class="section" id="control">
+      <div class="section-label">02 — Funnel Analysis</div>
+      <h2>Control Funnel</h2>
+      <p>The most conversion-ready of the three funnels. Its structure aligns well with paid traffic best practices — lead form above the fold, a credibility-first layout, and simplified content hierarchy. The task here is refinement, not rebuilding.</p>
+
+      <div class="funnel-card">
+        <div class="funnel-card-header">
+          <h3>Landing Page — What Is Working</h3>
+          <div class="badge-row"><span class="badge badge-green">Strongest Structure</span></div>
+        </div>
+        <div class="funnel-card-body">
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>"Don't Overpay" callout</strong> — Effective credibility pre-frame before pricing is introduced. Builds viewer confidence early in the scroll journey.</div></div>
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Dr. Vivek named prominently at the top</strong> — Practitioner authority at the most-viewed section of the page. Correct placement for high-ticket healthcare.</div></div>
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Lead form above the fold</strong> — Forms above the fold capture up to <span class="metric-pill">3× more leads</span> than scroll-dependent CTAs, particularly for cold traffic.</div></div>
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Sub-5-minute educational video</strong> — Deep enough to build trust, short enough to hold attention before the CTA. Optimal warm-up length for a landing page.</div></div>
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Warranty, tax deductible &amp; water dental implants callouts</strong> — Effective re-engagement anchors for viewers who hesitate after encountering pricing. Well-placed objection handlers throughout the scroll.</div></div>
+        </div>
+      </div>
+
+      <div class="funnel-card">
+        <div class="funnel-card-header">
+          <h3>Landing Page — Priority Improvements</h3>
+          <div class="badge-row"><span class="badge badge-red">Priority Fixes</span><span class="badge badge-amber">Test</span></div>
+        </div>
+        <div class="funnel-card-body">
+          <div class="finding"><div class="finding-dot dot-red"></div><div class="finding-text"><strong>Domain and URL structure must be updated.</strong> The current domain significantly undermines brand credibility. Recommended migration to a branded subdomain such as <em>dentalimplants.icotdentalcare.com</em>, <em>newpatient.icotdentalcare.com</em>, or <em>special.icotdentalcare.com</em>. Domain trust directly impacts click-through and form submission rates.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Test a two-stage form.</strong> Stage 1 collects contact information only (name, phone, email). Stage 2 presents qualifying questions. If a visitor drops off at stage 2, their contact is already captured for follow-up. This structure allows for more qualifying questions — including FICO if legally required — without sacrificing top-of-funnel lead volume. Also test a pricing-intent radio question in stage 2: "How much is a great smile worth to you?" with ranges from $0 to $40k+ per set, giving the sales team an intent signal before outreach without introducing price resistance at the top of the funnel.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Before/after transformation gallery needs borders.</strong> No clear visual separation between cases — some groupings appear to be the same patient. Minor fix with a meaningful impact on perceived credibility.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Jake Ryan's review is four scrolls long.</strong> Truncate with a "Read more" toggle, or give it a full-width container. Breaks visual rhythm in the social proof section as-is.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>No secondary CTA near Dr. Vivek's about section.</strong> Viewers who scroll deep without converting need a frictionless path back to the form. Add a CTA button or embedded mini-form in this section.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Test a hard link vs. soft link in Meta Ads.</strong> A soft link keeps users in the in-app browser where one tap exits. A hard link routes to the native browser, removing the easy escape hatch. Given the page's length, this could meaningfully improve scroll depth and form completions.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Pricing display should be market-tested.</strong> High-ticket pricing without adequate warm-up may increase abandonment. This is a market I have less direct experience with — whether upfront pricing helps or hurts conversion here is something I'd need to test rather than assume.</div></div>
+        </div>
+      </div>
+
+      <div class="funnel-card">
+        <div class="funnel-card-header">
+          <h3>Ad Creative</h3>
+          <div class="badge-row"><span class="badge badge-green">Brand Cohesive</span><span class="badge badge-amber">Format Gaps</span></div>
+        </div>
+        <div class="funnel-card-body">
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Consistent visual identity across ad variations</strong> — Cohesion builds recognition across the feed, especially important for high-ticket services where repeated exposure drives the decision process.</div></div>
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Correctly targeted toward Facebook</strong> — Dental implant ICP (45+, homeowners, higher household income) indexes strongly on Facebook over Instagram or TikTok.</div></div>
+          <div class="finding"><div class="finding-dot dot-red"></div><div class="finding-text"><strong>A 22-minute video ad is unlikely to be completing.</strong> Paid video watch time drops sharply past 2 minutes. <span class="metric-pill">Avg. paid view duration: &lt;1 min</span>. Front-load the value proposition or segment into a series. Add mid-roll CTAs every 60–90 seconds for content that intentionally runs long.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>No testimonial in rotation.</strong> Patient testimonials are among the highest-converting formats in healthcare — they reduce perceived risk and provide social proof in a format that feels native to the feed.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Short-form content is underrepresented.</strong> Build a 30–60 second creative tier for awareness and retargeting. Lower CPMs, useful for warming audiences before longer educational content.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 ORIGINAL -->
+    <div class="section" id="original">
+      <div class="section-label">03 — Funnel Analysis</div>
+      <h2>Original Funnel</h2>
+      <p>The strongest overall visual foundation of the three. Clear understanding of brand presentation. However, its multi-page website structure is fundamentally mismatched for cold paid traffic. The aesthetic is right; the architecture is not.</p>
+
+      <div class="funnel-card">
+        <div class="funnel-card-header">
+          <h3>Landing Page</h3>
+          <div class="badge-row"><span class="badge badge-green">Premium Aesthetic</span><span class="badge badge-red">High Friction</span></div>
+        </div>
+        <div class="funnel-card-body">
+          <div class="finding-group">
+            <div class="finding-group-title">Core Structural Issue</div>
+            <div class="finding"><div class="finding-dot dot-red"></div><div class="finding-text"><strong>Do not direct paid ad traffic to this website.</strong> Multi-page sites create multiple exit points and allow the viewer to self-navigate away from the conversion goal before submitting their information. On Facebook and Instagram, users are there to be entertained — not to purchase. Every click away from the lead form is a potential lost lead. The primary goal of any paid traffic landing page is to capture contact information. A lead in the CRM who says "no" can be reactivated; a visitor who never fills out the form cannot be followed up with at all.</div></div>
+          </div>
+          <div class="finding-group">
+            <div class="finding-group-title">What to Preserve</div>
+            <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Visual design language and premium presentation</strong> — Significantly more polished than the Control. These design elements should be extracted and applied to a single-page funnel architecture.</div></div>
+            <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Forms present across multiple pages</strong> — The intent to capture is already built in. Consolidate into one optimized flow.</div></div>
+          </div>
+          <div class="finding-group">
+            <div class="finding-group-title">Recommended Action</div>
+            <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Build a dedicated single-page landing page</strong> using the visual design of this site, structured like the Control's conversion architecture. Isolates the user in a frictionless environment and removes the ability to self-navigate away from the conversion goal.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-card">
+        <div class="funnel-card-header">
+          <h3>Ad Creative</h3>
+          <div class="badge-row"><span class="badge badge-green">Large Library</span><span class="badge badge-red">Execution Gaps</span></div>
+        </div>
+        <div class="funnel-card-body">
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Large library provides more testing surface area</strong> — More creative variations allow for faster A/B iteration and give the algorithm more to optimize against.</div></div>
+          <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Jocelyn's 30-second testimonial is the right format</strong> — Correct length and style. This is the direction the entire library should move toward.</div></div>
+          <div class="finding"><div class="finding-dot dot-red"></div><div class="finding-text"><strong>Captions missing on multiple ads.</strong> Roughly <span class="metric-pill">~85% of Facebook videos are watched on mute</span>. Uncaptioned video loses the majority of viewers before a single message lands. Apply retroactively to all existing creative and make it a production standard going forward.</div></div>
+          <div class="finding"><div class="finding-dot dot-red"></div><div class="finding-text"><strong>No CTA at the end of most or all testimonials.</strong> Every video ad must close with a directed next step. Without a CTA, the viewer has consumed the content with nowhere to go — the lead is lost at the finish line.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Caption styling currently draws attention to the fact that it looks like an ad.</strong> Consistent brand colors, voice, and tone create subconscious recognition — every time someone sees the palette, it reinforces the brand connection and keeps the practice top of mind. Caption design that clashes with the brand identity breaks that association and signals to the viewer that this is a paid placement, which increases resistance. Captions should feel native to the creative and consistent with the brand system.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Top-of-funnel ads must look like organic content.</strong> With <span class="metric-pill">82% of users on mobile</span>, Facebook and Instagram users are there for entertainment — they are a cold audience, not a warm one. The goal is to earn their attention first, convert that attention into a view, and then convert that view into a form fill. Landscape video immediately reads "advertisement" in a mobile feed, causing reflexive scrolling before the content can land. Vertical (9:16) or square (1:1) formats blend naturally into the Reels environment and give the creative a chance to stop the scroll.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Purple/green coloring and emoji-heavy creative erodes credibility</strong> at this price point. Recommend testing two versions of the same testimonial — clean vs. current styling — at <span class="metric-pill">~$20/day per ad set</span> before removing it entirely.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Ad copy is category-generic.</strong> Same anecdotal pain-point framing used by every competitor in this space. Lead with a specific insight or data point instead. The creative that stops the scroll doesn't look like every other healthcare ad.</div></div>
+          <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>More doctor-to-camera content is needed.</strong> In high-ticket healthcare, the connection to the actual provider is a primary conversion driver. A face reduces perceived risk in a way a brand logo cannot. Consistently validated across healthcare verticals and adjacent industries such as fitness.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 NEWEST -->
+    <div class="section" id="newest">
+      <div class="section-label">04 — Funnel Analysis</div>
+      <h2>Newest Funnel</h2>
+      <p>The strongest visual direction of the three — best balance between professional credibility and community feel. Shares the same structural challenge as the Original. The goal is to preserve the aesthetic while restructuring for paid traffic performance.</p>
+
+      <div class="funnel-card">
+        <div class="funnel-card-header">
+          <h3>Landing Page &amp; Ad Creative</h3>
+          <div class="badge-row"><span class="badge badge-green">Best Visual Design</span><span class="badge badge-red">Needs Consolidation</span></div>
+        </div>
+        <div class="funnel-card-body">
+          <div class="finding-group">
+            <div class="finding-group-title">What Is Working</div>
+            <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Strongest visual design of the three</strong> — The balance of professionalism and community feel is right. This is the design direction the entire funnel ecosystem should move toward.</div></div>
+            <div class="finding"><div class="finding-dot dot-green"></div><div class="finding-text"><strong>Community-oriented tone is well-executed</strong> — For a dental practice, trust is built through belonging as much as credentials. The visual and copy direction here captures both.</div></div>
+          </div>
+          <div class="finding-group">
+            <div class="finding-group-title">Priority Improvements</div>
+            <div class="finding"><div class="finding-dot dot-red"></div><div class="finding-text"><strong>Multi-page structure creates the same friction issue as the Original.</strong> Paid social traffic must land in a contained, single-objective environment. Priority action: rebuild the key content as a single-page funnel using the visual design language of this version.</div></div>
+            <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Landscape video is again prominent in the ad library.</strong> Apply the same recommendation as the Original — shift to vertical (9:16) or square (1:1) for mobile-first delivery.</div></div>
+            <div class="finding"><div class="finding-dot dot-amber"></div><div class="finding-text"><strong>Ad copy mirrors the Original's generic category framing.</strong> The creative direction here is strong enough to carry differentiated copy — it simply hasn't been written yet.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 INFRASTRUCTURE -->
+    <div class="section" id="infrastructure">
+      <div class="section-label">05 — Infrastructure</div>
+      <h2>Technical &amp; CRM Recommendations</h2>
+      <p>The current funnel infrastructure has clear limitations around domain credibility, page builder flexibility, and lead management. The following addresses the underlying technical stack needed to support the conversion improvements outlined above.</p>
+
+      <div class="rec-grid">
+        <div class="rec-card">
+          <div class="rec-title">GoHighLevel CRM</div>
+          <div class="rec-desc">Full-featured CRM and landing page platform with direct hands-on experience. Unlimited subaccounts under one plan — one per dental location — covering all six practices plus the surgical office in a unified system with shared automations and lead flows.</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-title">Branded Subdomain Migration</div>
+          <div class="rec-desc">Replace the current landing page domain with a subdomain under the primary ICOT website. Recommended: <em>dentalimplants.icotdentalcare.com</em> or <em>newpatient.icotdentalcare.com</em>. Domain trust directly impacts form submission rates.</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-title">HIPAA Compliance Layer</div>
+          <div class="rec-desc">GoHighLevel offers a HIPAA compliance add-on. Given the personal health intent data collected through dental landing pages, HIPAA-compliant data handling is a risk management priority and may be legally required depending on how patient data is stored and transmitted.</div>
+        </div>
+        <div class="rec-card">
+          <div class="rec-title">Dental-Specific CRM Evaluation</div>
+          <div class="rec-desc">Depending on existing practice management software (Dentrix, Eaglesoft, etc.), a purpose-built dental CRM may integrate more natively with clinical workflows. Recommend scheduling discovery calls with 1–2 dental-specific vendors to compare capabilities before committing long-term.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p><strong>Note on Website Hosting:</strong> GoHighLevel's website builder runs on a WordPress backend, which carries well-documented security vulnerabilities that are difficult to maintain without dedicated cybersecurity oversight. Recommendation is to use GoHighLevel exclusively for <em>landing pages and CRM functions</em> — not as the primary practice website host. Especially important given HIPAA compliance obligations.</p>
+      </div>
+    </div>
+
+    <!-- 06 ACTION PLAN -->
+    <div class="section" id="actionplan">
+      <div class="section-label">06 — Action Plan</div>
+      <h2>Priority Action Items</h2>
+      <p>The following items represent the recommended sequence of changes across all three funnels and the underlying infrastructure. Each should be validated through structured testing before being treated as a permanent change.</p>
+
+      <div class="steps-list">
+        <div class="step"><div class="step-num">1</div><div><div class="step-title">Migrate landing page to a branded subdomain</div><div class="step-desc">Replace the current domain with a subdomain under icotdentalcare.com. A credibility fix that costs nothing and directly impacts trust before a visitor reads a word of copy.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div><div class="step-title">Add captions to all existing video ads</div><div class="step-desc">Roughly 85% of Facebook videos are watched on mute. Uncaptioned video is the single most consistent and easily fixable performance gap across all three ad libraries.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div><div class="step-title">Add a CTA to the end of every video ad</div><div class="step-desc">No video should end without a directed next step. Applies to all existing testimonials, educational content, and any doctor-facing creative currently in rotation.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div><div class="step-title">Build a single-page funnel using the Newest funnel's visual design</div><div class="step-desc">Combine the Control's conversion architecture with the Newest funnel's visual design language. Target state for all paid social traffic. Build on GoHighLevel for maximum flexibility and tracking control.</div></div></div>
+        <div class="step"><div class="step-num">5</div><div><div class="step-title">Produce vertical-format video creative for all key ad types</div><div class="step-desc">Shoot or reformat testimonials, doctor-facing content, and educational videos in 9:16 for Reels placement. Reduces CPMs and increases native-feel engagement on mobile.</div></div></div>
+        <div class="step"><div class="step-num">6</div><div><div class="step-title">Produce doctor-to-camera video content</div><div class="step-desc">At least 2–3 pieces of direct-to-camera content featuring the treating physician. Personal connection to the provider is a documented conversion driver in high-ticket healthcare. Prioritize authenticity over production polish.</div></div></div>
+        <div class="step"><div class="step-num">7</div><div><div class="step-title">Implement and test the two-stage lead form</div><div class="step-desc">Stage 1: contact info only. Stage 2: qualifying questions including FICO (if legally required) and the pricing-intent radio question. Run against the current single-stage form to measure impact on lead volume and quality.</div></div></div>
+        <div class="step"><div class="step-num">8</div><div><div class="step-title">Evaluate and select CRM platform</div><div class="step-desc">Schedule discovery calls with GoHighLevel and at least one dental-specific CRM vendor. Confirm HIPAA compliance requirements, subaccount structure, and integration with existing practice management software before committing.</div></div></div>
+      </div>
+    </div>
+
+    <!-- 07 CLOSING -->
+    <div class="section" id="closing">
+      <div class="section-label">07 — Closing</div>
+      <h2>Closing Notes</h2>
+      <p>Everything outlined in this audit is a starting point — a set of informed hypotheses built from direct observation of the current funnel and ad ecosystem. None of these recommendations should be treated as permanent directives. Every significant change should be A/B tested with appropriate budget controls before full rollout.</p>
+      <p>The foundation is already strong. The Control is performing for a reason. The goal of this process is to take what is working, remove the points of friction that are likely costing leads, and build toward a funnel system that can scale across all six practices with a consistent, credible, and conversion-optimized presence.</p>
+      <p>I am prepared to begin executing on these changes immediately and look forward to continuing the conversation around next steps, testing frameworks, and CRM selection.</p>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <p>Prepared by <strong>Mikey Cabiles</strong> — Digital Marketing Consultant &amp; Content Strategist</p>
+        <p>All recommendations are hypothesis-driven and subject to A/B validation prior to permanent implementation.</p>
+      </div>
+      <div class="footer-right">Confidential</div>
+    </div>
+  </div>
+
+</div><!-- /page-content -->
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+    // Hide all sections except the first on load
+    sections.forEach((s, i) => {
+      s.style.display = i === 0 ? 'block' : 'none';
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        // Hide all sections
+        sections.forEach(s => s.style.display = 'none');
+        // Clear active state from all nav links
+        navLinks.forEach(l => l.classList.remove('active'));
+        // Show the target section and mark link active
+        link.classList.add('active');
+        const target = document.getElementById(link.getAttribute('href').slice(1));
+        if (target) target.style.display = 'block';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
